@@ -1,0 +1,22 @@
+{
+  "name": "Origin — Obsidian Telemetry Portfolio",
+  "short_name": "Origin",
+  "description": "High-end space and Apple inspired digital portfolio for Nived Krishna.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050508",
+  "theme_color": "#050508",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
