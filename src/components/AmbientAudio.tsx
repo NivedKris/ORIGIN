@@ -78,7 +78,7 @@ export default function AmbientAudio() {
   };
 
   return (
-    <div className="fixed top-20 left-6 md:left-12 z-50">
+    <div className="fixed top-20 md:top-24 left-6 md:left-24 lg:left-36 z-50">
       {/* Hidden background loop audio - removed JSX autoPlay to prevent browser overriding state */}
       <audio ref={audioRef} src="/audio/bg.mp3" loop />
 

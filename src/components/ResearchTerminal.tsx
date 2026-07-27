@@ -29,12 +29,7 @@ export default function ResearchTerminal() {
           </div>
 
           <h4 className="font-display text-lg md:text-xl font-extrabold tracking-wide text-white uppercase leading-snug">
-            <DecryptedText
-              text="A computational study of how Sanskrit-specific morphophonological phenomena behave under noisy spoken input"
-              animateOn="view"
-              speed={25}
-              maxIterations={4}
-            />
+            <span>A computational study of how Sanskrit-specific morphophonological phenomena behave under noisy spoken input</span>
           </h4>
 
           <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-[#a0a0b0]">

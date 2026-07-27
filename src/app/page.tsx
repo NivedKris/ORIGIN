@@ -10,7 +10,6 @@ import ResearchTerminal from "@/components/ResearchTerminal";
 import AudioDeck from "@/components/AudioDeck";
 import OperatorTransmissions from "@/components/OperatorTransmissions";
 import ContactForm from "@/components/ContactForm";
-import HudDock from "@/components/HudDock";
 import HeroDashboard from "@/components/HeroDashboard";
 import InteractiveExperience from "@/components/InteractiveExperience";
 import InteractiveEducation from "@/components/InteractiveEducation";
@@ -19,6 +18,7 @@ import AmbientAudio from "@/components/AmbientAudio";
 import TargetCursor from "@/components/TargetCursor";
 import ScrollReveal from "@/components/ScrollReveal";
 import AchievementsConsole from "@/components/AchievementsConsole";
+import PillNav from "@/components/PillNav";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -67,27 +67,31 @@ export default function Home() {
         {/* Custom global noise overlay to kill flat digital banding (Apple standard) */}
         <div className="noise-overlay" />
 
-        {/* Top Minimal Apple-like Nav Bar - No borders, full screen usage, shifted origin left */}
-        <header className="w-full bg-[#050508]/80 backdrop-blur-md sticky top-0 z-40">
-          <div className="w-full px-6 md:px-12 h-16 flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <span className="font-display font-light text-sm tracking-[0.4em] text-white uppercase select-none">
-                ORIGIN
-              </span>
-            </div>
-            
-            <div className="hidden md:flex items-center space-x-4 font-mono text-[9px] tracking-[0.2em] text-[#a0a0b0]/40">
-              <span>COORD // 45.109.81.24</span>
-              <span>SYS // RESPONSIVE_OK</span>
-            </div>
-          </div>
-        </header>
-
-        {/* Bottom Floating Console Dock Panel */}
-        {!isLoading && <HudDock />}
+        {/* Top Minimal Apple-like Nav Bar - Restructured into React Bits PillNav with smooth scroll controls */}
+        {!isLoading && (
+          <header className="sticky top-0 z-40 w-full flex justify-center py-4 bg-transparent">
+            <PillNav
+              logo=""
+              logoAlt="Origin Logo"
+              initialLoadAnimation={true}
+              items={[
+                { label: "DEPLOYMENTS", href: "#deployments" },
+                { label: "EXPERIENCE", href: "#chronology" },
+                { label: "EDUCATION", href: "#specifications" },
+                { label: "BEATS", href: "#beats" },
+                { label: "AWARDS", href: "#achievements" },
+                { label: "CONTACT", href: "#uplink" }
+              ]}
+              baseColor="#050508"
+              pillColor="transparent"
+              pillTextColor="#a0a0b0"
+              hoveredPillTextColor="#ffffff"
+            />
+          </header>
+        )}
 
         {/* Content Body Container - fully utilizing the screen width, no container border-x or divide-y lines */}
-        <main className="flex-1 w-full px-6 md:px-12">
+        <main className="flex-1 w-full px-6 md:px-12 pt-10">
           
           {/* Section 1: Hero Dashboard Panel (Instant fade on loader finish) */}
           <ScrollReveal delay={100} duration={1000} distance={15} blur={true}>

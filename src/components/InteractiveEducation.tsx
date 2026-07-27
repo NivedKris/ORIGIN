@@ -71,6 +71,7 @@ export default function InteractiveEducation() {
   const [viewState, setViewState] = useState<"orbit" | "timeline" | "expanded">("orbit");
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isClientMobile, setIsClientMobile] = useState(false);
 
   // Position angles for our orbiting bodies (planets) around the central Explore button
   const orbitRadius = 140; // Radius in pixels for desktop orbit path (4 items)
@@ -83,6 +84,16 @@ export default function InteractiveEducation() {
     setSelectedIdx(idx);
     setViewState("expanded");
   };
+
+  // Synchronize client-side screen width to completely prevent SSR/Hydration mismatches
+  useEffect(() => {
+    setIsClientMobile(window.innerWidth < 768);
+    const handleResize = () => {
+      setIsClientMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Programmatic viewport alignment focus sweep:
   // When view state changes, scroll the viewport instantly to align with the top of this container
@@ -107,7 +118,7 @@ export default function InteractiveEducation() {
           <div className="absolute inset-0 animate-[spin_35s_linear_infinite] hover:[animation-play-state:paused]">
             {EDUCATION_DATA.map((item, idx) => {
               const angle = (idx * (360 / EDUCATION_DATA.length) * Math.PI) / 180;
-              const activeRadius = typeof window !== "undefined" && window.innerWidth < 768 ? 95 : orbitRadius;
+              const activeRadius = isClientMobile ? 95 : orbitRadius;
               const x = Math.cos(angle) * activeRadius;
               const y = Math.sin(angle) * activeRadius;
 
