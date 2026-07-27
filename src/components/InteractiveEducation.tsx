@@ -123,7 +123,7 @@ export default function InteractiveEducation() {
               return (
                 <div
                   key={idx}
-                  className="absolute left-1/2 top-1/2 -ml-8 -mt-8 md:-ml-10 md:-mt-10 flex flex-col items-center justify-center transition-all duration-300"
+                  className="absolute left-1/2 top-1/2 -ml-10 -mt-10 md:-ml-12 md:-mt-12 flex flex-col items-center justify-center transition-all duration-300"
                   style={{
                     transform: `translate(${x}px, ${y}px)`,
                   }}
@@ -133,7 +133,7 @@ export default function InteractiveEducation() {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/[0.05] hover:border-white/20 bg-[#050508]/90 flex items-center justify-center p-3.5 group cursor-pointer transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,255,255,0.05)]"
+                    className="w-20 h-20 md:w-24 md:h-24 rounded-full border border-white/[0.05] hover:border-white/20 bg-[#050508]/90 flex items-center justify-center p-4 group cursor-pointer transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.08)]"
                   >
                     
                     {/* Counter spin container to keep logos standing upright all the time! */}
@@ -141,7 +141,7 @@ export default function InteractiveEducation() {
                       <img
                         src={item.logo}
                         alt={item.institution}
-                        className={`max-h-full max-w-full object-contain filter invert grayscale opacity-45 group-hover:opacity-100 transition-opacity duration-300 mix-blend-screen ${
+                        className={`max-h-full max-w-full object-contain filter invert grayscale opacity-80 group-hover:opacity-100 transition-opacity duration-300 mix-blend-screen ${
                           item.scaleClass || ""
                         }`}
                         onError={(e) => {
@@ -206,7 +206,7 @@ export default function InteractiveEducation() {
 
                     <div className="space-y-1.5">
                       <h4 className="font-display text-lg md:text-xl font-extrabold tracking-wider text-white uppercase leading-none">
-                        <DecryptedText text={item.institution} animateOn="view" speed={40} maxIterations={12} />
+                        <span>{item.institution}</span>
                       </h4>
 
                       <span className="font-mono text-sm md:text-base text-[#f97316] block uppercase tracking-wider font-semibold">

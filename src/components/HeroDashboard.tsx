@@ -134,6 +134,13 @@ export default function HeroDashboard() {
           <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-6">
             <a
               href="#uplink"
+              onClick={(e) => {
+                e.preventDefault();
+                const element = document.getElementById("uplink");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
               className="font-mono text-xs tracking-widest uppercase border border-white hover:bg-white hover:text-black hover:shadow-[0_0_20px_rgba(255,255,255,0.12)] px-8 py-3.5 transition-all duration-300 text-white text-center cursor-pointer font-bold rounded-md"
             >
               Connect Terminal

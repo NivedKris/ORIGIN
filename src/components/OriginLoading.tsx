@@ -214,9 +214,9 @@ export default function OriginLoading({ onComplete }: OriginLoadingProps) {
           />
         </h1>
         
-        {/* Understated subhead */}
+        {/* Understated subhead - updated to reflect Nived's authentic academic & platform domains */}
         <p className="font-mono text-[10px] tracking-[0.25em] text-[#a0a0b0]/40 uppercase">
-          PERFORMANCE HARDWARE ARCHITECTURE
+          
         </p>
       </div>
 

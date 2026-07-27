@@ -13,9 +13,10 @@ const DOCK_ITEMS: DockItem[] = [
   { label: "01 // DEPLOYMENTS", href: "#deployments" },
   { label: "02 // CHRONOLOGY", href: "#chronology" },
   { label: "03 // RESEARCH", href: "#research" },
-  { label: "04 // BEATS", href: "#beats" },
-  { label: "05 // OPERATORS", href: "#operators" },
-  { label: "06 // UPLINK", href: "#uplink" },
+  { label: "04 // AWARDS", href: "#achievements" },
+  { label: "05 // BEATS", href: "#beats" },
+  { label: "06 // OPERATORS", href: "#operators" },
+  { label: "07 // UPLINK", href: "#uplink" },
 ];
 
 export default function HudDock() {
@@ -30,6 +31,14 @@ export default function HudDock() {
             <a
               key={idx}
               href={item.href}
+              onClick={(e) => {
+                e.preventDefault();
+                const targetId = item.href.replace("#", "");
+                const element = targetId ? document.getElementById(targetId) : document.documentElement;
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
               onMouseEnter={() => setHoveredIdx(idx)}
               onMouseLeave={() => setHoveredIdx(null)}
               className="relative flex flex-col items-center justify-center py-1 flex-1 text-center transition-all duration-300"

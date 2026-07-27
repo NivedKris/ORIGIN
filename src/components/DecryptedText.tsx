@@ -17,8 +17,8 @@ const GLYPHS = "XX//++__--[][]{}##%%@@0101XYZ!?*&";
 
 export default function DecryptedText({
   text,
-  speed = 25,
-  maxIterations = 4,
+  speed = 12,
+  maxIterations = 2,
   revealDirection = "start",
   animateOn = "mount",
   enableHoverEffect = false,

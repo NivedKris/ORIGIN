@@ -18,6 +18,7 @@ import Galaxy from "@/components/Galaxy";
 import AmbientAudio from "@/components/AmbientAudio";
 import TargetCursor from "@/components/TargetCursor";
 import ScrollReveal from "@/components/ScrollReveal";
+import AchievementsConsole from "@/components/AchievementsConsole";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -144,21 +145,28 @@ export default function Home() {
             </section>
           </ScrollReveal>
 
-          {/* Section 6: FL Studio Waveform Deck (Music beats) */}
+          {/* Section 7: Achievements Console */}
+          <ScrollReveal delay={100} duration={1200} distance={35} blur={true}>
+            <section id="achievements" className="py-24">
+              <AchievementsConsole />
+            </section>
+          </ScrollReveal>
+
+          {/* Section 8: FL Studio Waveform Deck (Music beats) */}
           <ScrollReveal delay={100} duration={1200} distance={35} blur={true}>
             <section id="beats" className="py-24">
               <AudioDeck />
             </section>
           </ScrollReveal>
 
-          {/* Section 7: Operator Transmissions (References) */}
+          {/* Section 9: Operator Transmissions (References) */}
           <ScrollReveal delay={100} duration={1200} distance={35} blur={true}>
             <section id="operators" className="py-24">
               <OperatorTransmissions />
             </section>
           </ScrollReveal>
 
-          {/* Section 8: Telemetry Uplink Form (Contact Formspree) */}
+          {/* Section 10: Telemetry Uplink Form (Contact Formspree) */}
           <ScrollReveal delay={100} duration={1200} distance={35} blur={true}>
             <section id="uplink" className="py-24 pb-36">
               <ContactForm />

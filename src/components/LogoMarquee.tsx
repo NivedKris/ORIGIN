@@ -11,10 +11,10 @@ interface PartnerLogo {
 
 const PARTNER_LOGOS: PartnerLogo[] = [
   { name: "IIT KHARAGPUR", src: "/images/iitkgp.png", url: "https://www.iitkgp.ac.in/" },
-  { name: "KLYSTRON GLOBAL", src: "/images/klystron_global_logo.jpeg", scaleClass: "scale-[1.6]", url: "https://www.klystronglobal.com/" },
+  { name: "KLYSTRON GLOBAL", src: "/images/klystron_global_logo.png", scaleClass: "scale-[1.6]", url: "https://www.klystronglobal.com/" },
   { name: "MAXIML", src: "/images/maximl.jpeg", url: "https://maximl.com/" },
   { name: "C-DAC", src: "/images/cdac_logo.svg", url: "https://www.cdac.in/index.aspx?id=BL" },
-  { name: "MACOM", src: "/images/macomsolutions_logo.jpeg", scaleClass: "scale-[1.8]", url: "https://macomsolutions.com/" },
+  { name: "MACOM", src: "/images/macomsolutions_logo.png", scaleClass: "scale-[1.8]", url: "https://macomsolutions.com/" },
   { name: "TEC DE MONTERREY", src: "/images/tecdemonterrey_logo.jpeg", url: "https://tec.mx/es?srsltid=AfmBOoqk4_W9ykzCLIQvvKWTNF0K9yALiStEIAfNzr5NvNsvHmp9oS35" },
   { name: "MARKETRACK", src: "/images/marketrack.jpeg", url: "https://www.marketrack.in/" },
 ];
