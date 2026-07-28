@@ -50,7 +50,10 @@ export default function LogoMarquee() {
                 <img
                   src={logo.src}
                   alt={logo.name}
-                  className={`max-h-full max-w-full object-contain filter invert grayscale opacity-50 group-hover:opacity-100 transition-all duration-300 mix-blend-screen ${
+                  style={{
+                    filter: "invert(1) grayscale(1) contrast(3) brightness(0.55)"
+                  }}
+                  className={`max-h-full max-w-full object-contain transition-all duration-300 mix-blend-screen group-hover:brightness-[1] ${
                     logo.scaleClass ? `${logo.scaleClass} group-hover:scale-[1.65]` : "group-hover:scale-103"
                   }`}
                   onError={(e) => {

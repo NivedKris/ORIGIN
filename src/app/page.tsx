@@ -13,7 +13,7 @@ import ContactForm from "@/components/ContactForm";
 import HeroDashboard from "@/components/HeroDashboard";
 import InteractiveExperience from "@/components/InteractiveExperience";
 import InteractiveEducation from "@/components/InteractiveEducation";
-import Galaxy from "@/components/Galaxy";
+import Dither from "@/components/Dither";
 import AmbientAudio from "@/components/AmbientAudio";
 import TargetCursor from "@/components/TargetCursor";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -35,17 +35,18 @@ export default function Home() {
         />
       )}
 
-      {/* Full-screen slow WebGL Galaxy background animation rendered outside of stacking contexts */}
+      {/* Full-screen slow WebGL Dither background animation rendered outside of stacking contexts */}
       {!isLoading && (
         <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none opacity-[0.22]">
-          <Galaxy 
-            density={0.7} 
-            starSpeed={0.35} 
-            glowIntensity={0.65} 
-            twinkleIntensity={0.6} 
-            rotationSpeed={0.06}
-            saturation={0.05} // Pristine desaturated slate look matching our monochrome telemetry
-            hueShift={220}
+          <Dither
+            waveColor={[0.3, 0.3, 0.35]}
+            disableAnimation={false}
+            enableMouseInteraction={true}
+            mouseRadius={0.4}
+            colorNum={4}
+            waveAmplitude={0.3}
+            waveFrequency={3}
+            waveSpeed={0.05}
           />
         </div>
       )}
