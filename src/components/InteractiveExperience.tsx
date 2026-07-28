@@ -2,6 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 import DecryptedText from "./DecryptedText";
+import PDFViewerModal from "./PDFViewerModal";
+
+interface Attachment {
+  label: string;
+  path: string;
+}
 
 interface ExperienceItem {
   company: string;
@@ -12,6 +18,7 @@ interface ExperienceItem {
   shortDesc: string;
   bullets: string[];
   scaleClass?: string;
+  attachments?: Attachment[];
 }
 
 const EXPERIENCE_DATA: ExperienceItem[] = [
@@ -26,7 +33,7 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
       "Conducted comprehensive academic research in natural language processing (NLP), automatic speech recognition (ASR), and spoken Sanskrit computational linguistics.",
       "Co-authored specialized research papers investigating how compound morphological and phonological structures behave under noisy spoken inputs.",
       "Designed and benchmarked multiple spoken Sanskrit corpora utilizing custom ASR systems and Google Cloud pipelines.",
-    ],
+    ]
   },
   {
     company: "KLYSTRON GLOBAL",
@@ -42,6 +49,9 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
       "Developed Spectralense, a biometric verification platform with fully passive liveness detection and webhook integrations.",
     ],
     scaleClass: "scale-[1.5]",
+    attachments: [
+      { label: "SERVICE_RECORD // EXPERIENCE_LOG", path: "/Certificates/klystron global.pdf" }
+    ]
   },
   {
     company: "MAXIML",
@@ -55,6 +65,9 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
       "Implemented Gantt chart backends that improved reporting efficiency by 35% using containerized Docker environments.",
       "Created a central user management system with role-based access control (RBAC), enhancing development productivity by 40%.",
     ],
+    attachments: [
+      { label: "INTERNSHIP_CREDENTIAL // RECON_LOG", path: "/Certificates/MAXIML.pdf" }
+    ]
   },
   {
     company: "C-DAC",
@@ -68,6 +81,9 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
       "Developed specialized phonetic Sandhi transformations for compound Sanskrit words, improving word error rate (WER) by 30%.",
       "Optimized ASR data pipelines through Sox audio preprocessing, reducing processing latency by 30%.",
     ],
+    attachments: [
+      { label: "RESEARCH_CREDENTIAL // SPEECH_AI_ASR", path: "/Certificates/CDAC.pdf" }
+    ]
   },
   {
     company: "MANAPPURAM COMPTECH",
@@ -81,6 +97,9 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
       "Formulated document processing pipelines with cloud functions and agentic chunking, indexing files 50% faster.",
     ],
     scaleClass: "scale-[1.6]",
+    attachments: [
+      { label: "INTERNSHIP_CREDENTIAL // MULTIMODAL_RAG", path: "/Certificates/MACOM.pdf" }
+    ]
   },
   {
     company: "TEC DE MONTERREY",
@@ -93,6 +112,9 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
       "Created an order management system with route optimization, boosting inventory accuracy by 40% and cutting delivery effort by 25%.",
       "Applied demand forecasting algorithms with Scikit-learn in Flask, decreasing stockouts by 20%.",
     ],
+    attachments: [
+      { label: "DEVELOPMENT_CREDENTIAL // OM_SYSTEM", path: "/Certificates/Tecnologico de monterrey.pdf" }
+    ]
   },
   {
     company: "MARKETRACK",
@@ -106,6 +128,9 @@ const EXPERIENCE_DATA: ExperienceItem[] = [
       "Implemented responsive React.js designs, enhancing cross-platform compatibility by 20% and reducing frontend load times by 15%.",
       "Achieved seamless backend integration and effective cross-team collaboration, resulting in a 98% bug-free and refined product launch.",
     ],
+    attachments: [
+      { label: "INTERNSHIP_CREDENTIAL // FRONTEND_DEV", path: "/Certificates/MARKETRACK.pdf" }
+    ]
   },
 ];
 
@@ -114,6 +139,7 @@ export default function InteractiveExperience() {
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isClientMobile, setIsClientMobile] = useState(false);
+  const [activePdf, setActivePdf] = useState<{ path: string; title: string } | null>(null);
 
   // Position angles for our orbiting bodies (planets) around the central Explore button
   const orbitRadius = 160; // Radius in pixels for desktop orbit path (expanded slightly for 7 items)
@@ -252,7 +278,7 @@ export default function InteractiveExperience() {
                   {/* Left Column (10/12 width): Primary Timeline Data */}
                   <div className="md:col-span-10 space-y-3.5 order-2 md:order-1">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                      <span className="font-mono text-xs text-[#00FFCC] tracking-widest">
+                      <span className="font-mono text-xs text-white/50 tracking-widest">
                         {item.duration}
                       </span>
                       <span className="font-mono text-[9px] text-[#a0a0b0]/55 select-none uppercase tracking-wider">
@@ -311,7 +337,7 @@ export default function InteractiveExperience() {
       {viewState === "expanded" && (
         <div className="w-full max-w-3xl space-y-8 animate-[fadeIn_0.5s_ease-out] relative z-10 px-4 md:px-0">
           <div className="flex justify-between items-center pb-4 border-b border-white/[0.05]">
-            <span className="font-mono text-[10px] tracking-[0.2em] text-[#00FFCC] uppercase select-none">
+            <span className="font-mono text-[10px] tracking-[0.2em] text-[#f97316] uppercase select-none font-bold">
               DEEP_DIVE // IMPACT_METRICS
             </span>
             <button
@@ -343,7 +369,7 @@ export default function InteractiveExperience() {
             {/* Right Column (9/12 width): Information payload content */}
             <div className="md:col-span-9 space-y-6">
               <div className="space-y-2">
-                <span className="font-mono text-xs text-[#00FFCC] tracking-widest block">
+                <span className="font-mono text-xs text-white/50 tracking-widest block">
                   {EXPERIENCE_DATA[selectedIdx].duration}
                 </span>
                 <h3 className="font-display text-2xl md:text-3xl font-extrabold tracking-widest text-white uppercase">
@@ -370,17 +396,50 @@ export default function InteractiveExperience() {
                       key={idx}
                       className="font-mono text-xs md:text-sm text-[#a0a0b0]/80 leading-relaxed list-none relative pl-5"
                     >
-                      <span className="absolute left-0 top-2 w-1 h-1 bg-[#00FFCC] rounded-full" />
+                      <span className="absolute left-0 top-2 w-1 h-1 bg-[#f97316] rounded-full animate-pulse" />
                       {bullet}
                     </li>
                   ))}
                 </ul>
               </div>
 
+              {/* Verified Documents Uplink */}
+              {EXPERIENCE_DATA[selectedIdx].attachments && EXPERIENCE_DATA[selectedIdx].attachments!.length > 0 && (
+                <div className="space-y-3 pt-4 border-t border-white/[0.05]">
+                  <span className="font-mono text-[9px] tracking-[0.2em] text-[#a0a0b0]/55 uppercase select-none block">
+                    VERIFIED_UPLINKS // SECURED_ATTACHMENTS
+                  </span>
+                  <div className="flex flex-wrap gap-4">
+                    {EXPERIENCE_DATA[selectedIdx].attachments!.map((attachment, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActivePdf({ path: attachment.path, title: attachment.label })}
+                        className="font-mono text-[10px] md:text-xs tracking-widest border border-white/20 hover:border-[#f97316] px-4 py-2 bg-[#050508]/60 text-white transition-all duration-300 uppercase cursor-pointer flex items-center gap-2 group hover:shadow-[0_0_15px_rgba(249,115,22,0.1)] rounded-lg"
+                      >
+                        <svg className="w-3.5 h-3.5 fill-[#f97316]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
+                        {attachment.label.includes("LOG") || attachment.label.includes("RECORD") || attachment.label.includes("CREDENTIAL") ? "EXPERIENCE_CERTIFICATE" : attachment.label}
+                        <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">↗</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
             </div>
 
           </div>
         </div>
+      )}
+
+      {/* PDF Secure Uplink Overlay Render Core */}
+      {activePdf && (
+        <PDFViewerModal
+          pdfPath={activePdf.path}
+          title={activePdf.title}
+          onClose={() => setActivePdf(null)}
+        />
       )}
 
       {/* Basic Keyframe Fade CSS animation fallback inline */}

@@ -2,6 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 import DecryptedText from "./DecryptedText";
+import PDFViewerModal from "./PDFViewerModal";
+
+interface Attachment {
+  label: string;
+  path: string;
+}
 
 interface EducationItem {
   institution: string;
@@ -12,6 +18,7 @@ interface EducationItem {
   shortDesc: string;
   bullets: string[];
   scaleClass?: string;
+  attachments?: Attachment[];
 }
 
 const EDUCATION_DATA: EducationItem[] = [
@@ -27,6 +34,9 @@ const EDUCATION_DATA: EducationItem[] = [
       "Conducting research under the supervision of Prof. Pawan Goyal.",
       "Investigating boundary-sensitive speech errors and downstream NLP task robustness.",
     ],
+    attachments: [
+      { label: "ADMISSION_LETTER // IIT_KHARAGPUR", path: "/Certificates/FinalOfferLetter.pdf" }
+    ]
   },
   {
     institution: "INDIAN INSTITUTE OF INFORMATION TECHNOLOGY, KOTTAYAM",
@@ -40,6 +50,9 @@ const EDUCATION_DATA: EducationItem[] = [
       "Maintained an exceptional CGPA of 8.67 / 10.0.",
       "Participated in collaborative supply chain logistics product development with Tecnológico de Monterrey.",
     ],
+    attachments: [
+      { label: "ACADEMIC_TRANSCRIPT // DEGREE_MARKSHEET", path: "/Certificates/DegreeMarksheet .png" }
+    ]
   },
   {
     institution: "KAILASANADHA VIDYANIKETHAN",
@@ -52,6 +65,9 @@ const EDUCATION_DATA: EducationItem[] = [
       "Acquired fundamental knowledge of structural programming concepts, object-oriented concepts, and memory allocations.",
       "Mastered structured query languages (SQL) and relational schema mappings.",
     ],
+    attachments: [
+      { label: "ACADEMIC_RECORD // CLASS_XII_MARK_LIST", path: "/Certificates/Mark list XII.pdf" }
+    ]
   },
   {
     institution: "SN VIDYA BHAVAN",
@@ -64,6 +80,9 @@ const EDUCATION_DATA: EducationItem[] = [
       "Acquired basic skills in microcontrollers, electronics, and logical algorithmic scripting.",
       "Studied advanced science, physics mechanics, and mathematics foundations.",
     ],
+    attachments: [
+      { label: "ACADEMIC_RECORD // CLASS_X_MARK_LIST", path: "/Certificates/Mark list X.pdf" }
+    ]
   },
 ];
 
@@ -72,6 +91,7 @@ export default function InteractiveEducation() {
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isClientMobile, setIsClientMobile] = useState(false);
+  const [activePdf, setActivePdf] = useState<{ path: string; title: string } | null>(null);
 
   // Position angles for our orbiting bodies (planets) around the central Explore button
   const orbitRadius = 140; // Radius in pixels for desktop orbit path (4 items)
@@ -207,7 +227,7 @@ export default function InteractiveEducation() {
                   {/* Left Column (10/12 width): Primary Timeline Data */}
                   <div className="md:col-span-10 space-y-3.5 order-2 md:order-1">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                      <span className="font-mono text-xs text-[#00FFCC] tracking-widest">
+                      <span className="font-mono text-xs text-white/50 tracking-widest">
                         {item.duration}
                       </span>
                       <span className="font-mono text-[9px] text-[#a0a0b0]/55 select-none uppercase tracking-wider">
@@ -266,7 +286,7 @@ export default function InteractiveEducation() {
       {viewState === "expanded" && (
         <div className="w-full max-w-3xl space-y-8 animate-[fadeIn_0.5s_ease-out] relative z-10 px-4 md:px-0">
           <div className="flex justify-between items-center pb-4 border-b border-white/[0.05]">
-            <span className="font-mono text-[10px] tracking-[0.2em] text-[#00FFCC] uppercase select-none">
+            <span className="font-mono text-[10px] tracking-[0.2em] text-[#f97316] uppercase select-none font-bold">
               DEEP_DIVE // ACADEMIC_METRICS
             </span>
             <button
@@ -298,7 +318,7 @@ export default function InteractiveEducation() {
             {/* Right Column (9/12 width): Information payload content */}
             <div className="md:col-span-9 space-y-6">
               <div className="space-y-2">
-                <span className="font-mono text-xs text-[#00FFCC] tracking-widest block">
+                <span className="font-mono text-xs text-white/50 tracking-widest block">
                   {EDUCATION_DATA[selectedIdx].duration}
                 </span>
                 <h3 className="font-display text-2xl md:text-3xl font-extrabold tracking-widest text-white uppercase">
@@ -325,17 +345,50 @@ export default function InteractiveEducation() {
                       key={idx}
                       className="font-mono text-xs md:text-sm text-[#a0a0b0]/80 leading-relaxed list-none relative pl-5"
                     >
-                      <span className="absolute left-0 top-2 w-1 h-1 bg-[#00FFCC] rounded-full" />
+                      <span className="absolute left-0 top-2 w-1 h-1 bg-[#f97316] rounded-full animate-pulse" />
                       {bullet}
                     </li>
                   ))}
                 </ul>
               </div>
 
+              {/* Verified Documents Uplink */}
+              {EDUCATION_DATA[selectedIdx].attachments && EDUCATION_DATA[selectedIdx].attachments!.length > 0 && (
+                <div className="space-y-3 pt-4 border-t border-white/[0.05]">
+                  <span className="font-mono text-[9px] tracking-[0.2em] text-[#a0a0b0]/55 uppercase select-none block">
+                    VERIFIED_UPLINKS // SECURED_ATTACHMENTS
+                  </span>
+                  <div className="flex flex-wrap gap-4">
+                    {EDUCATION_DATA[selectedIdx].attachments!.map((attachment, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActivePdf({ path: attachment.path, title: attachment.label })}
+                        className="font-mono text-[10px] md:text-xs tracking-widest border border-white/20 hover:border-[#f97316] px-4 py-2 bg-[#050508]/60 text-white transition-all duration-300 uppercase cursor-pointer flex items-center gap-2 group hover:shadow-[0_0_15px_rgba(249,115,22,0.1)] rounded-lg"
+                      >
+                        <svg className="w-3.5 h-3.5 fill-[#f97316]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                        </svg>
+                        {attachment.label.includes("MARK") || attachment.label.includes("TRANSCRIPT") || attachment.label.includes("LETTER") ? attachment.label.replace("RECORD", "CERTIFICATE") : attachment.label}
+                        <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">↗</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
             </div>
 
           </div>
         </div>
+      )}
+
+      {/* PDF Secure Uplink Overlay Render Core */}
+      {activePdf && (
+        <PDFViewerModal
+          pdfPath={activePdf.path}
+          title={activePdf.title}
+          onClose={() => setActivePdf(null)}
+        />
       )}
 
       {/* Basic Keyframe Fade CSS animation fallback inline */}
