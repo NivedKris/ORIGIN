@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "skills": {
+    "ascii-art": {
+      "source": "infinition/LaRuche",
+      "commit": "0bbf06ca800b4375ec58aeb2bfb4c033d5b91229",
+      "sourceType": "github",
+      "skillPath": "laruche/skills/ascii-art/SKILL.md",
+      "computedHash": "f1df5c2eff3cfa7f8376e29cb7b430fcdacc4e912d871c01014217ce8a2fde32"
+    }
+  }
+}

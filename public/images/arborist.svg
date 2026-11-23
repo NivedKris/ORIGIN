@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" fill="none">
+  <rect width="320" height="240" fill="#050508"/>
+  <g stroke="#00FFCC" stroke-width="2" stroke-linecap="round" opacity="0.85">
+    <!-- S -> NP VP -->
+    <line x1="160" y1="40" x2="90" y2="95"/>
+    <line x1="160" y1="40" x2="230" y2="95"/>
+    <!-- NP -> DT NN -->
+    <line x1="90" y1="95" x2="55" y2="150"/>
+    <line x1="90" y1="95" x2="125" y2="150"/>
+    <!-- VP -> VB NP -->
+    <line x1="230" y1="95" x2="195" y2="150"/>
+    <line x1="230" y1="95" x2="265" y2="150"/>
+    <!-- NP -> DT NN -->
+    <line x1="265" y1="150" x2="240" y2="200"/>
+    <line x1="265" y1="150" x2="290" y2="200"/>
+  </g>
+  <g fill="#00FFCC">
+    <circle cx="160" cy="40" r="9"/>
+  </g>
+  <g fill="#ffffff">
+    <circle cx="90" cy="95" r="7"/>
+    <circle cx="230" cy="95" r="7"/>
+    <circle cx="265" cy="150" r="6"/>
+  </g>
+  <g fill="#a0a0b0">
+    <circle cx="55" cy="150" r="5"/>
+    <circle cx="125" cy="150" r="5"/>
+    <circle cx="195" cy="150" r="5"/>
+    <circle cx="240" cy="200" r="5"/>
+    <circle cx="290" cy="200" r="5"/>
+  </g>
+  <!-- CKY chart hint -->
+  <g stroke="#ffffff" stroke-opacity="0.18" stroke-width="1">
+    <path d="M20 225 H 140 M20 205 H 120 M20 185 H 100 M20 165 H 80"/>
+  </g>
+</svg>

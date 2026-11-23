@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import ElasticSlider from "./rb/ElasticSlider";
+import DecryptedText from "./DecryptedText";
 
 interface Track {
   id: string;
@@ -109,6 +111,7 @@ export default function AudioDeck() {
 
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
+      audioRef.current.volume = volume;
       setDuration(audioRef.current.duration);
     }
   };
@@ -141,8 +144,8 @@ export default function AudioDeck() {
           <span className="font-mono text-[10px] tracking-[0.3em] text-[#00FFCC] block uppercase">
             STUDIO MONITOR // FL_AUDIO_CORE
           </span>
-          <h3 className="font-display text-lg font-light tracking-widest text-white uppercase">
-            FL Studio Beat Production
+          <h3 className="font-display text-lg font-light tracking-widest text-white uppercase term-caret">
+            <DecryptedText text="FL Studio Beat Production" animateOn="view" speed={40} maxIterations={14} revealDirection="start" />
           </h3>
         </div>
         <span className="hidden sm:inline font-mono text-[9px] tracking-widest text-[#a0a0b0]/55 select-none">
@@ -302,17 +305,23 @@ export default function AudioDeck() {
                 </a>
               </div>
 
-              {/* Hardware Volume Slider Controls */}
-              <div className="flex items-center space-x-3 w-full sm:w-40 justify-between sm:justify-end">
-                <span className="font-mono text-[9px] tracking-widest text-[#a0a0b0]/55 select-none uppercase">VOL</span>
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.05}
-                  value={volume}
-                  onChange={(e) => setVolume(parseFloat(e.target.value))}
-                  className="w-24 sm:w-full h-[3px] bg-white/[0.08] hover:bg-white/20 accent-[#00FFCC] rounded-lg cursor-pointer transition-all duration-300 outline-none"
+              {/* Elastic volume slider (React Bits ElasticSlider) */}
+              <div className="w-full sm:w-56 text-[#00FFCC]">
+                <ElasticSlider
+                  value={Math.round(volume * 100)}
+                  maxValue={100}
+                  isStepped
+                  stepSize={1}
+                  onChange={(v) => setVolume(v / 100)}
+                  valuePosition="bubble"
+                  formatValue={(v) => `VOL ${Math.round(v)}`}
+                  thickness={4}
+                  activeThickness={10}
+                  wheel
+                  trackColor="rgba(255,255,255,0.08)"
+                  rangeColor="#00FFCC"
+                  iconColor="#a0a0b0"
+                  ariaLabel="Volume"
                 />
               </div>
 

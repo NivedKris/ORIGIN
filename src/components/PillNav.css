@@ -1,7 +1,5 @@
 .pill-nav-container {
-  position: absolute;
-  top: 1.5rem;
-  left: 0;
+  position: relative;
   width: 100%;
   z-index: 99;
 }
@@ -11,8 +9,7 @@
     width: 100%;
     left: 0;
     transform: none;
-    padding: 0 1rem;
-    top: 1rem;
+    padding: 0 1.5rem;
   }
 }
 
@@ -62,6 +59,8 @@
   text-decoration: none;
   cursor: pointer;
   height: var(--nav-h);
+  position: relative;
+  z-index: 1000; /* Stays above fixed full-screen menu overlay */
 }
 
 .pill-logo-text:hover span {
@@ -186,6 +185,7 @@
   cursor: pointer;
   padding: 0;
   position: relative;
+  z-index: 1000; /* Stays above fixed full-screen menu overlay */
 }
 
 @media (max-width: 768px) {
@@ -197,22 +197,26 @@
 .hamburger-line {
   width: 16px;
   height: 2px;
-  background: var(--pill-bg, #fff);
+  background: #ffffff; /* Use solid white instead of transparent --pill-bg */
   border-radius: 1px;
   transition: all 0.3s ease;
   transform-origin: center;
 }
 
 .mobile-menu-popover {
-  position: absolute;
-  top: 4.5em;
-  left: 0rem;
-  right: 0rem;
-  background: var(--base, #050508);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
-  z-index: 998;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(5, 5, 8, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 990; /* covers page content but sits beneath the close button */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
   transform-origin: top center;
   visibility: hidden;
@@ -221,29 +225,58 @@
 .mobile-menu-list {
   list-style: none;
   margin: 0;
-  padding: 8px;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .mobile-menu-popover .mobile-menu-link {
   display: block;
-  padding: 12px 16px;
+  padding: 12px 24px;
   color: #a0a0b0;
   background-color: transparent;
   text-decoration: none;
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.15em;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.mobile-menu-popover .mobile-menu-link::before {
+  content: '▸';
+  color: #f97316;
+  margin-right: 8px;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.mobile-menu-popover .mobile-menu-link:hover::before,
+.mobile-menu-popover .mobile-menu-link.is-active::before {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .mobile-menu-popover .mobile-menu-link:hover,
 .mobile-menu-popover .mobile-menu-link.is-active {
   cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: transparent;
   color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+}
+
+.mobile-menu-terminal-footer {
+  margin-top: 4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 1.5rem;
+  width: 180px;
 }

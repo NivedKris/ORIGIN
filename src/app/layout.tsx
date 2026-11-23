@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
+import { Doto, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+// Dot-matrix display face + terminal mono for body copy
+const doto = Doto({ subsets: ["latin"], variable: "--font-doto", weight: "variable", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jbm", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Origin // Portfolio",
@@ -21,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="en" className={`h-full antialiased ${doto.variable} ${mono.variable}`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

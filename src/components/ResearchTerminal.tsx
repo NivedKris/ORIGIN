@@ -18,8 +18,8 @@ export default function ResearchTerminal() {
         <span className="font-mono text-[10px] tracking-[0.3em] text-[#00FFCC] block uppercase">
           ACADEMIC DISPATCH // DISSEMINATION_NODES
         </span>
-        <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1">
-          Publications & Research
+        <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1 term-caret">
+          <DecryptedText text="Publications & Research" animateOn="view" speed={40} maxIterations={14} revealDirection="start" />
         </h3>
       </div>
 

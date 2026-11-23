@@ -108,8 +108,8 @@ export default function MissionTimeline() {
           <span className="font-mono text-[10px] tracking-[0.3em] text-[#00FFCC] block uppercase">
             CHRONOLOGICAL LOGS // EXP_NODE
           </span>
-          <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1">
-            Work Experience Timeline
+          <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1 term-caret">
+            <DecryptedText text="Work Experience Timeline" animateOn="view" speed={40} maxIterations={14} revealDirection="start" />
           </h3>
         </div>
 
@@ -174,8 +174,8 @@ export default function MissionTimeline() {
           <span className="font-mono text-[10px] tracking-[0.3em] text-[#00FFCC] block uppercase">
             CHRONOLOGICAL LOGS // EDU_NODE
           </span>
-          <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1">
-            Academic Track
+          <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1 term-caret">
+            <DecryptedText text="Academic Track" animateOn="view" speed={40} maxIterations={14} revealDirection="start" />
           </h3>
         </div>
 

@@ -13,7 +13,9 @@ import ContactForm from "@/components/ContactForm";
 import HeroDashboard from "@/components/HeroDashboard";
 import InteractiveExperience from "@/components/InteractiveExperience";
 import InteractiveEducation from "@/components/InteractiveEducation";
-import Dither from "@/components/Dither";
+import FaultyTerminal from "@/components/rb/FaultyTerminal";
+import ClickSpark from "@/components/rb/ClickSpark";
+import GlitchText from "@/components/rb/GlitchText";
 import AmbientAudio from "@/components/AmbientAudio";
 import TargetCursor from "@/components/TargetCursor";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -35,19 +37,35 @@ export default function Home() {
         />
       )}
 
-      {/* Full-screen slow WebGL Dither background animation rendered outside of stacking contexts */}
+      {/* Encrypted terminal backdrop: React Bits FaultyTerminal glyph field (scrambles under the cursor, glitches on click) */}
       {!isLoading && (
-        <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none opacity-[0.22]">
-          <Dither
-            waveColor={[0.3, 0.3, 0.35]}
-            disableAnimation={false}
-            enableMouseInteraction={true}
-            mouseRadius={0.4}
-            colorNum={4}
-            waveAmplitude={0.3}
-            waveFrequency={3}
-            waveSpeed={0.05}
-          />
+        <div className="fixed inset-0 -z-10 w-full h-full pointer-events-none bg-[#050508]">
+          <div className="absolute inset-0 opacity-[0.32]">
+            <FaultyTerminal
+              glyphs="characters"
+              tint="#00FFCC"
+              scale={1.4}
+              gridMul={[2, 1]}
+              digitSize={1.3}
+              timeScale={0.25}
+              scanlineIntensity={0.45}
+              glitchAmount={0.8}
+              flickerAmount={0.6}
+              noiseAmp={0.9}
+              curvature={0.08}
+              brightness={0.7}
+              glow={0.4}
+              scramble={0.8}
+              mouseReact
+              mouseStrength={0.25}
+              mouseGlow={0.9}
+              vignette={0.5}
+              clickEffect="glitch"
+              dpr={1}
+            />
+          </div>
+          {/* readability veil: darker in the centre column where content sits */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_45%,rgba(5,5,8,0.55),rgba(5,5,8,0.15)_80%)]" />
         </div>
       )}
 
@@ -56,9 +74,10 @@ export default function Home() {
         <OriginLoading onComplete={() => setIsLoading(false)} />
       )}
 
-      {/* Main Portfolio Page (revealed when loading is finished) */}
+      {/* Main Portfolio Page (revealed when loading is finished); every click throws stars */}
+      <ClickSpark shape="line" sparkColor={["#00FFCC", "#ffffff"]} sparkCount={8} sparkRadius={22} sparkSize={10} sparkWidth={1.5} glow={0.6}>
       <div
-        className={`min-h-screen text-white flex flex-col justify-between selection:bg-[#f97316] selection:text-black transition-all duration-1000 relative z-10 ${
+        className={`min-h-screen text-white flex flex-col justify-between selection:bg-[#f97316] selection:text-black transition-all duration-1000 relative ${
           isLoading ? "opacity-0 blur-md scale-[1.02]" : "opacity-100 blur-0 scale-100"
         }`}
       >
@@ -70,7 +89,7 @@ export default function Home() {
 
         {/* Top Minimal Apple-like Nav Bar - Restructured into React Bits PillNav with smooth scroll controls */}
         {!isLoading && (
-          <header className="sticky top-0 z-40 w-full flex justify-center py-4 bg-transparent">
+          <header className="sticky top-0 z-40 w-full flex justify-center py-4 bg-[#050508]/85 backdrop-blur-md border-b border-white/[0.04] transition-all duration-300">
             <PillNav
               logo=""
               logoAlt="Origin Logo"
@@ -121,7 +140,7 @@ export default function Home() {
                   SYSTEM LOGS // CORE_EXPERIENCES
                 </span>
                 <h2 className="font-display text-2xl md:text-3xl font-extralight tracking-[0.2em] text-white uppercase leading-none">
-                  02 // PROFESSIONAL TIMELINE
+                  <GlitchText mode="rgb" trigger="hover" intensity={0.6} fontSize="inherit" fontWeight="inherit" className="!mx-0 !whitespace-normal" shadowColors={["#00FFCC", "#f97316"]}>02 // PROFESSIONAL TIMELINE</GlitchText>
                 </h2>
               </div>
               <InteractiveExperience />
@@ -136,7 +155,7 @@ export default function Home() {
                   SYSTEM LOGS // ACADEMIC_TRACKS
                 </span>
                 <h2 className="font-display text-2xl md:text-3xl font-extralight tracking-[0.2em] text-white uppercase leading-none">
-                  03 // ACADEMIC TIMELINE
+                  <GlitchText mode="rgb" trigger="hover" intensity={0.6} fontSize="inherit" fontWeight="inherit" className="!mx-0 !whitespace-normal" shadowColors={["#00FFCC", "#f97316"]}>03 // ACADEMIC TIMELINE</GlitchText>
                 </h2>
               </div>
               <InteractiveEducation />
@@ -188,6 +207,7 @@ export default function Home() {
           </div>
         </footer>
       </div>
+      </ClickSpark>
     </>
   );
 }

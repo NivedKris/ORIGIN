@@ -100,8 +100,8 @@ export default function OperatorTransmissions() {
         <span className="font-mono text-[10px] tracking-[0.3em] text-[#00FFCC] block uppercase">
           OPERATOR REVIEWS // COMM_TRANS_DECRYPTED
         </span>
-        <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1">
-          Decrypted Transmissions
+        <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1 term-caret">
+          <DecryptedText text="Decrypted Transmissions" animateOn="view" speed={40} maxIterations={14} revealDirection="start" />
         </h3>
       </div>
 

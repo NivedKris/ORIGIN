@@ -10,8 +10,8 @@
   --color-laser-orange: #f97316;
   --color-tactical-cyan: #00FFCC;
   
-  --font-display: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Geist Mono', 'Fira Code', monospace;
+  --font-display: var(--font-doto), 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: var(--font-jbm), 'JetBrains Mono', ui-monospace, monospace;
 }
 
 @theme inline {
@@ -28,7 +28,7 @@
 body {
   background-color: var(--color-space-void);
   color: var(--foreground);
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -60,4 +60,17 @@ body {
   pointer-events: none;
   z-index: 9999;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Dot-matrix display face: thin weights dissolve into dust, so floor them */
+.font-display { font-variation-settings: "ROND" 100; }
+.font-display.font-extralight, .font-display.font-light { font-weight: 500; }
+
+/* Terminal caret for decrypted headings */
+@keyframes caret-blink { 50% { opacity: 0; } }
+.term-caret::after {
+  content: "_";
+  margin-left: 0.15em;
+  color: var(--color-tactical-cyan);
+  animation: caret-blink 1s steps(1) infinite;
 }

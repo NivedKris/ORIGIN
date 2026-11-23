@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import DecryptedText from "./DecryptedText";
 
 interface Achievement {
   title: string;
@@ -12,6 +13,14 @@ interface Achievement {
 }
 
 const ACHIEVEMENTS_DATA: Achievement[] = [
+  {
+    title: "TOP 6 OF 2,000+",
+    role: "Viasat Space for Good India Challenge",
+    organization: "Viasat × IN-SPACe // Project MARK",
+    logo: "/images/viasat.svg",
+    date: "OCTOBER 2026",
+    url: "https://www.viasat.com/perspectives/corporate/2026/meet-six-finalists-competing-2026-viasat-space-for-good-india-challenge/"
+  },
   {
     title: "WINNER",
     role: "BIA GenAI Hackathon",
@@ -54,8 +63,8 @@ export default function AchievementsConsole() {
         <span className="font-mono text-[10px] tracking-[0.3em] text-[#00FFCC] block uppercase">
           DIAGNOSTICS // PERFORMANCE_AWARDS
         </span>
-        <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1">
-          Achievements & Hackathons
+        <h3 className="font-display text-lg font-light tracking-widest text-white uppercase mt-1 term-caret">
+          <DecryptedText text="Achievements & Hackathons" animateOn="view" speed={40} maxIterations={14} revealDirection="start" />
         </h3>
       </div>
 

@@ -50,6 +50,18 @@ export default function PillNav({
   const navItemsRef = useRef<HTMLDivElement | null>(null);
   const logoRef = useRef<any>(null);
 
+  // Disable page scrolling when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   useEffect(() => {
     const layout = () => {
       circleRefs.current.forEach(circle => {
@@ -175,26 +187,49 @@ export default function PillNav({
     });
   };
 
-  const toggleMobileMenu = () => {
-    const newState = !isMobileMenuOpen;
-    setIsMobileMenuOpen(newState);
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
 
     const hamburger = hamburgerRef.current;
     const menu = mobileMenuRef.current;
 
     if (hamburger) {
       const lines = hamburger.querySelectorAll('.hamburger-line');
-      if (newState) {
-        gsap.to(lines[0], { rotation: 45, y: 3, duration: 0.3, ease });
-        gsap.to(lines[1], { rotation: -45, y: -3, duration: 0.3, ease });
-      } else {
-        gsap.to(lines[0], { rotation: 0, y: 0, duration: 0.3, ease });
-        gsap.to(lines[1], { rotation: 0, y: 0, duration: 0.3, ease });
-      }
+      gsap.to(lines[0], { rotation: 0, y: 0, duration: 0.3, ease });
+      gsap.to(lines[1], { rotation: 0, y: 0, duration: 0.3, ease });
     }
 
     if (menu) {
-      if (newState) {
+      gsap.to(menu, {
+        opacity: 0,
+        y: 10,
+        scaleY: 1,
+        duration: 0.2,
+        ease,
+        transformOrigin: 'top center',
+        onComplete: () => {
+          gsap.set(menu, { visibility: 'hidden' });
+        }
+      });
+    }
+  };
+
+  const toggleMobileMenu = () => {
+    if (isMobileMenuOpen) {
+      closeMobileMenu();
+    } else {
+      setIsMobileMenuOpen(true);
+
+      const hamburger = hamburgerRef.current;
+      const menu = mobileMenuRef.current;
+
+      if (hamburger) {
+        const lines = hamburger.querySelectorAll('.hamburger-line');
+        gsap.to(lines[0], { rotation: 45, y: 3, duration: 0.3, ease });
+        gsap.to(lines[1], { rotation: -45, y: -3, duration: 0.3, ease });
+      }
+
+      if (menu) {
         gsap.set(menu, { visibility: 'visible' });
         gsap.fromTo(
           menu,
@@ -208,22 +243,9 @@ export default function PillNav({
             transformOrigin: 'top center'
           }
         );
-      } else {
-        gsap.to(menu, {
-          opacity: 0,
-          y: 10,
-          scaleY: 1,
-          duration: 0.2,
-          ease,
-          transformOrigin: 'top center',
-          onComplete: () => {
-            gsap.set(menu, { visibility: 'hidden' });
-          }
-        });
       }
+      onMobileMenuClick?.();
     }
-
-    onMobileMenuClick?.();
   };
 
   const cssVars = {
@@ -309,7 +331,7 @@ export default function PillNav({
                 className={`mobile-menu-link${activeHref === item.href ? ' is-active' : ''}`}
                 onClick={(e) => {
                   e.preventDefault();
-                  setIsMobileMenuOpen(false);
+                  closeMobileMenu();
                   const targetId = item.href.replace("#", "");
                   const element = targetId ? document.getElementById(targetId) : null;
                   if (element) {
@@ -322,6 +344,12 @@ export default function PillNav({
             </li>
           ))}
         </ul>
+
+        {/* Premium high-tech console decoration at the bottom of the overlay */}
+        <div className="mobile-menu-terminal-footer font-mono text-[9px] tracking-[0.2em] text-[#a0a0b0]/30 text-center uppercase space-y-1">
+          <div>SYS_STATUS // ACTIVE_DECRYPT_OK</div>
+          <div>GRID_NODE // NIVED_KRISHNA_PORTFOLIO</div>
+        </div>
       </div>
     </div>
   );
